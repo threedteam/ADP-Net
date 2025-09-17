@@ -47,7 +47,7 @@
 3. **Start Training:**
 
    ```bash
-   python train.py -c configs/config_train.yml -e your_experiment_name --resume_mae your_mae_pretrain
+   python train.py -c configs/config_train.yml -e your_experiment_name --resume_mae your_mae_pretrained
    ```
 
    - You can resume training from a checkpoint using the `--resume` argument.
@@ -74,12 +74,10 @@
 
 2. **Run Inference:**
 
-   Bash
-
    ```Bash
    python test.py -c configs/config_test.yml -r path/to/your/checkpoint.ckpt --load_pl
    ```
-
+   
    - `-r` specifies the path to the model checkpoint you trained in Step 1.
    - `--load_pl` indicates loading a PyTorch Lightning format checkpoint.
    - `--output_path` can be used to specify the output directory for the results.
