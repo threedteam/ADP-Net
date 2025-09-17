@@ -8,7 +8,7 @@
 
 - **Environment:** MATLAB R2018a or later.
 
-### 2. Inpainting
+### 2. Hole Filling
 
 1. Clone this repository:
 
