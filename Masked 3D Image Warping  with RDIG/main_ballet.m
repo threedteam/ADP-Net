@@ -14,7 +14,7 @@
 %     This program and corresponding materials are protected by software
 %     copyright and patents.
 %
-%     Corresponding author£ºRan Liu
+%     Corresponding authorï¼šRan Liu
 %     Address: College of Computer Science, Chongqing University, 400044, Chongqing, P.R.China
 %     Phone: +86 136 5835 8706
 %     Fax: +86 23 65111874
@@ -33,9 +33,9 @@
 % =========================================================================================================
 clc
 clear
-% È«¾Ö±äÁ¿
+% å…¨å±€å˜é‡
 % initialise parameters
-calib_params_ballet; % read the calibration parameters of ¡°ballet¡± sequence
+calib_params_ballet; % read the calibration parameters of â€œballetâ€ sequence
 data_path = 'E:\Desktop\research\dibr\paper\nowtest\dataset\ballet\orignal_ballet\';
 mask_folder_root_path = 'E:\Desktop\research\dibr\paper\nowtest\dataset\ballet\instance\output\';
 
@@ -47,22 +47,22 @@ warp_time = zeros(100,1);
 for idx = 0 : 99
     t1=clock;
     %% input images and maps
-    % ¶ÁÈ¡ÉãÏñ»ú5²¶»ñµÄÍ¼ÏñIR-color-cam5
+    % è¯»å–æ‘„åƒæœº5æ•è·çš„å›¾åƒIR-color-cam5
     if (idx < 10)
         FileName = strcat(data_path, 'cam5\color-cam5-f00', int2str(idx), '.jpg');
         IR = imread(FileName);
         
-        % ¶ÁÈ¡IR¶ÔÓ¦µÄÉî¶ÈÍ¼
+        % è¯»å–IRå¯¹åº”çš„æ·±åº¦å›¾
         FileName = strcat(data_path, 'cam5\depth-cam5-f00', int2str(idx), '.png');
         D = imread(FileName);
         
-        % ¶ÁÈ¡¶ÔÓ¦µÄinstanceÍ¼
+        % è¯»å–å¯¹åº”çš„instanceå›¾
         frame_name = strcat('color-cam5-f00', int2str(idx));
     else
         FileName = strcat(data_path, 'cam5\color-cam5-f0', int2str(idx), '.jpg');
         IR = imread(FileName);
         
-        % ¶ÁÈ¡IR¶ÔÓ¦µÄÉî¶ÈÍ¼
+        % è¯»å–IRå¯¹åº”çš„æ·±åº¦å›¾
         FileName = strcat(data_path, 'cam5\depth-cam5-f0', int2str(idx), '.png');
         D = imread(FileName);
 
@@ -71,7 +71,7 @@ for idx = 0 : 99
     individual_masks_path = fullfile(mask_folder_root_path, frame_name, '/');
     
     if ~exist(individual_masks_path, 'dir')
-        error('ÕÒ²»µ½ÊµÀıÑÚÂëÎÄ¼ş¼Ğ: %s', individual_masks_path);
+        error('æ‰¾ä¸åˆ°å®ä¾‹æ©ç æ–‡ä»¶å¤¹: %s', individual_masks_path);
     end
 
    
@@ -97,20 +97,20 @@ for idx = 0 : 99
     
    
     for k = 1:length(sorted_mask_names)
-        % ¶¨Òåµ±Ç°ÊµÀıµÄID (´Ó1¿ªÊ¼µİÔö)
+        % å®šä¹‰å½“å‰å®ä¾‹çš„ID (ä»1å¼€å§‹é€’å¢)
         instance_id = uint8(k); 
         
-        % ¶ÁÈ¡µ¥¸öÊµÀıµÄ¶şÖµÑÚÂëÎÄ¼ş
+        % è¯»å–å•ä¸ªå®ä¾‹çš„äºŒå€¼æ©ç æ–‡ä»¶
         single_mask_filename = fullfile(individual_masks_path, sorted_mask_names{k});
         single_mask_img = imread(single_mask_filename);
          
-        % ÎªÈ·±£½¡×³ĞÔ, ½«¶ÁÈëµÄÑÚÂë×ªÎªÂß¼­ĞÍ (logical)
+        % ä¸ºç¡®ä¿å¥å£®æ€§, å°†è¯»å…¥çš„æ©ç è½¬ä¸ºé€»è¾‘å‹ (logical)
         if size(single_mask_img, 3) > 1
             single_mask_img = single_mask_img(:,:,1); 
         end
         is_instance_region = (single_mask_img > 0); 
        
-        % Ê¹ÓÃÂß¼­Ë÷Òı, ½«µ±Ç°ÊµÀıID¸³Öµ¸ø»­²¼ÉÏµÄ¶ÔÓ¦ÇøÓò
+        % ä½¿ç”¨é€»è¾‘ç´¢å¼•, å°†å½“å‰å®ä¾‹IDèµ‹å€¼ç»™ç”»å¸ƒä¸Šçš„å¯¹åº”åŒºåŸŸ
         instance_map(is_instance_region) = instance_id;
     end
    
@@ -118,7 +118,7 @@ for idx = 0 : 99
     hi = size(IR, 1);
     wi = size(IR, 2);
     
-    %% Õë¶ÔballetĞòÁĞµÄ´¦Àí£¬Ô­Í¼ÉÏ±ßºÍ×ó±ß´æÔÚ²»ÕæÊµÏñËØºÍÉî¶ÈÖµ
+    %% é’ˆå¯¹balletåºåˆ—çš„å¤„ç†ï¼ŒåŸå›¾ä¸Šè¾¹å’Œå·¦è¾¹å­˜åœ¨ä¸çœŸå®åƒç´ å’Œæ·±åº¦å€¼
     IR(1:2,:,:)=IR(3:4,:,:);
     D(1:2,:,:)=D(3:4,:,:);
     instance_map(1:2,:,:)=instance_map(3:4,:,:);
@@ -126,12 +126,12 @@ for idx = 0 : 99
     D(:,1:2,:)=D(:,3:4,:);
     instance_map(1:2,:,:)=instance_map(3:4,:,:);
     
-    %% µÃµ½Ö»º¬ÓĞ±³¾°²¿·ÖµÄÍ¼Æ¬£¬Ç°¾°²¿·ÖÈ«²¿ÎªºÚÉ«
+    %% å¾—åˆ°åªå«æœ‰èƒŒæ™¯éƒ¨åˆ†çš„å›¾ç‰‡ï¼Œå‰æ™¯éƒ¨åˆ†å…¨éƒ¨ä¸ºé»‘è‰²
     IR_BK = IR;
     IR_BK(instance_map == 255) = 0;
     
 %     figure(1);
-%     imshow(IR_BK);  % Ö»º¬ÓĞ±³¾°²¿·ÖµÄIR_BKÍ¼
+%     imshow(IR_BK);  % åªå«æœ‰èƒŒæ™¯éƒ¨åˆ†çš„IR_BKå›¾
     
     %% 3D image warping
     % M: generated non-hole matrix, double
@@ -147,34 +147,34 @@ for idx = 0 : 99
     [Ides, M, Ides_bk, M_bk, fg_map] = threed_image_warping_wmask(instance_map, IR, D, MinZ, MaxZ, m5_ProjMatrix, m4_RT, m4_ProjMatrix);
     
     %[Ides, M] = threed_image_warping(IR, D, MinZ, MaxZ, m5_ProjMatrix, m4_RT, m4_ProjMatrix); % Ides: generated destination image, uint8; M: generated non-hole matrix, double
-    %[Ides_bk, M_bk] = threed_image_warping(IR_BK, D, MinZ, MaxZ, m5_ProjMatrix, m4_RT, m4_ProjMatrix); %Ä¿±ê±³¾°Í¼ÈıÎ¬Í¶Ó°
-    %[Ides_map, M_map] = threed_image_warping(instance_map, D, MinZ, MaxZ, m5_ProjMatrix, m4_RT, m4_ProjMatrix);  %Ç°¾°mask¸ú×ÅÒ»ÆğÍ¶Ó°£¬¶ÔÓÚÄ¿±êÍ¼ÖĞµÄÇ°¾°²¿·Ö
+    %[Ides_bk, M_bk] = threed_image_warping(IR_BK, D, MinZ, MaxZ, m5_ProjMatrix, m4_RT, m4_ProjMatrix); %ç›®æ ‡èƒŒæ™¯å›¾ä¸‰ç»´æŠ•å½±
+    %[Ides_map, M_map] = threed_image_warping(instance_map, D, MinZ, MaxZ, m5_ProjMatrix, m4_RT, m4_ProjMatrix);  %å‰æ™¯maskè·Ÿç€ä¸€èµ·æŠ•å½±ï¼Œå¯¹äºç›®æ ‡å›¾ä¸­çš„å‰æ™¯éƒ¨åˆ†
 %     M_bk(Ides_bk(:, :, 1) == 0) = -1;
     
-    % Í³¼Æhole size
+    % ç»Ÿè®¡hole size
     hole_nums = M==-1;
     hole_nums = sum(sum(hole_nums));
     hole_per = hole_nums/(hi*wi);
     hole_pers(idx+1,1) = hole_per;
     % for test
-    % Êä³öÈıÎ¬Í¼Ïñ±ä»»½á¹û
+    % è¾“å‡ºä¸‰ç»´å›¾åƒå˜æ¢ç»“æœ
     %         FileName_Ides = strcat('Ides\Ides_TIW_', int2str(idx), '.bmp');
     %         imwrite(Ides, FileName_Ides);
     %         FileName_M = strcat('M\M_TIW_', int2str(idx), '.txt');
     %         save(FileName_M, 'M',  '-ASCII');
     %
 %             figure;
-%             imshow(Ides); % ¾­¹ıÈıÎ¬±ä»»µÄ½á¹û£¨Ç°¾°£«±³¾°£©
+%             imshow(Ides); % ç»è¿‡ä¸‰ç»´å˜æ¢çš„ç»“æœï¼ˆå‰æ™¯ï¼‹èƒŒæ™¯ï¼‰
 
 %             figure;
 %             fig_m = M;
 %             fig_m(fig_m==-1)=0;
 %             fig_m = uint8(fig_m);
-%             imshow(fig_m); % ¾­¹ıÈıÎ¬±ä»»µÄ½á¹û£¨Éî¶ÈÍ¼£©
+%             imshow(fig_m); % ç»è¿‡ä¸‰ç»´å˜æ¢çš„ç»“æœï¼ˆæ·±åº¦å›¾ï¼‰
 
 
           %  figure;
-          %  imshow(Ides_map); % ¾­¹ıÈıÎ¬±ä»»µÄ½á¹û£¨map£©
+          %  imshow(Ides_map); % ç»è¿‡ä¸‰ç»´å˜æ¢çš„ç»“æœï¼ˆmapï¼‰
 
             
     
@@ -187,7 +187,7 @@ for idx = 0 : 99
     %
 %     [Ides, M] = median_filtering(Ides, M, wi, hi);
     %
-    % % save Ides and M£¬ÔÚµ±Ç°Ä¿Â¼ÏÂ
+    % % save Ides and Mï¼Œåœ¨å½“å‰ç›®å½•ä¸‹
     % FileName_Ides = strcat('Ides\Ides_MF_', int2str(idx), '.bmp');
     % imwrite(Ides, FileName_Ides);
     % FileName_M = strcat('M\M_MF_', int2str(idx), '.txt');
@@ -212,7 +212,7 @@ for idx = 0 : 99
 %     figure(2);
 %     imshow(M);
     
-    th_big_hole = 3; % threshold for big hole detection. if the number of hole-points in a hole is greater than th_big_hole, the hole is labeled as a ¡°big hole¡±
+    th_big_hole = 3; % threshold for big hole detection. if the number of hole-points in a hole is greater than th_big_hole, the hole is labeled as a â€œbig holeâ€
     sharp_th = 4; % threshold for sharp transition
     n_dilation = 3; % the number of points to be dilated
     rend_order = 0; % flag of the rending order of the reference image. The destination image positioned at camera 4 is rendered from camera 5 (camera 5 ? camera 4), therefore the destination image is right view.
@@ -220,7 +220,7 @@ for idx = 0 : 99
     [Ides_bk, M_bk] = big_hole_dilation(Ides_bk, M_bk, th_big_hole, sharp_th, n_dilation, rend_order, wi, hi);
     [fg_map, M] = big_hole_dilation(fg_map, M, th_big_hole, sharp_th, n_dilation, rend_order, wi, hi);
 %     [Ides_map, M_map] = big_hole_dilation(Ides_map, M_map, th_big_hole, sharp_th, n_dilation, rend_order, wi, hi);
-    % Í³¼Æhole size
+    % ç»Ÿè®¡hole size
     hole_nums = M==-1;
     hole_nums = sum(sum(hole_nums));
     hole_per = hole_nums/(hi*wi);
@@ -228,30 +228,30 @@ for idx = 0 : 99
 
 
 
-    %% ±£´æÄ¿±êÍ¼ÏñÉî¶ÈĞÅÏ¢
+    %% ä¿å­˜ç›®æ ‡å›¾åƒæ·±åº¦ä¿¡æ¯
      D = M;
      
-%      %      ±£´æÉî¶ÈĞÅÏ¢£¬¿É²»ÓÃ
+%      %      ä¿å­˜æ·±åº¦ä¿¡æ¯ï¼Œå¯ä¸ç”¨
 %      FileName_D = strcat('G:\thesis_experiment_rxw\datasets\ballet\improved_dibr\D_ballet\Is_ballet_D', int2str(idx), '.txt');
 %      save(FileName_D, 'D', '-ASCII');
      
-     D(D==-1)=255;  %Èç¹ûÏëÒªÉî¶ÈÍ¼ÖĞ¿Õ¶´ÇøÓòÎªºÚÉ«£¬Ö»ĞèÒª½«ÖµÉèÎª0¼´¿É
+     D(D==-1)=255;  %å¦‚æœæƒ³è¦æ·±åº¦å›¾ä¸­ç©ºæ´åŒºåŸŸä¸ºé»‘è‰²ï¼Œåªéœ€è¦å°†å€¼è®¾ä¸º0å³å¯
      D = uint8(D);
      
-%      %±£´æ¿Õ¶´ÖµÉèÎª255µÄÉî¶ÈÍ¼
+%      %ä¿å­˜ç©ºæ´å€¼è®¾ä¸º255çš„æ·±åº¦å›¾
 %      FileName_dep = strcat('../datasets/ballet/improved_dibr/Depthmap_ballet/Is_ballet_depth_', int2str(idx), '.png');
 %      imwrite(D, FileName_dep);
 %     
-     %% ±£´æÄ¿±êÍ¼ºÍÖ»º¬±³¾°ĞÅÏ¢µÄÄ¿±êÍ¼
+     %% ä¿å­˜ç›®æ ‡å›¾å’Œåªå«èƒŒæ™¯ä¿¡æ¯çš„ç›®æ ‡å›¾
 
-    %±£´æÄ¿±êÍ¼Ïñ,¿Õ¶´²¿·ÖÊÇºÚÉ«µÄ
+    %ä¿å­˜ç›®æ ‡å›¾åƒ,ç©ºæ´éƒ¨åˆ†æ˜¯é»‘è‰²çš„
 %      FileName_Ides = strcat(save_path, 'black_hole/D_ballet/Is_ballet_des', int2str(idx), '.png');
 %      imwrite(Ides, FileName_Ides);
-     %±£´æÖ»º¬±³¾°µÄÄ¿±êÍ¼Ïñ£¬¿Õ¶´²¿·ÖÊÇºÚÉ«µÄ
+     %ä¿å­˜åªå«èƒŒæ™¯çš„ç›®æ ‡å›¾åƒï¼Œç©ºæ´éƒ¨åˆ†æ˜¯é»‘è‰²çš„
 %      FileName_Ides_bk = strcat(save_path, 'black_hole/D_ballet_bk/Is_ballet_bk_des', int2str(idx), '.png');
 %      imwrite(Ides_bk, FileName_Ides_bk);
      
-    %% ±£´æÓÃÓÚcnnµÄÍ¼Ïñ¡£ºÚ°×·­×ª:·­×ªºó£¬0´ú±í·Ç¿ÕÏñËØµã£¬1´ú±í¿Õ¶´ÏñËØµã
+    %% ä¿å­˜ç”¨äºcnnçš„å›¾åƒã€‚é»‘ç™½ç¿»è½¬:ç¿»è½¬åï¼Œ0ä»£è¡¨éç©ºåƒç´ ç‚¹ï¼Œ1ä»£è¡¨ç©ºæ´åƒç´ ç‚¹
     M(M ~= -1) = 1;
     M(M == -1) = 0;
     for i = 1 : hi
@@ -268,53 +268,53 @@ for idx = 0 : 99
     end
     M_bk =~ M_bk;
     
-    %¶Ôfg_map ½øĞĞ±Õ²Ù×÷
+    %å¯¹fg_map è¿›è¡Œé—­æ“ä½œ
     % se = strel('disk', 15);
     % fg_map = imclose(fg_map, se);
     
-     % 1. ¶¨ÒåDilationµÄ½á¹¹ÔªËØ 
+     % 1. å®šä¹‰Dilationçš„ç»“æ„å…ƒç´  
     se = strel('disk', 3); 
     
-    % 2. ³õÊ¼»¯Ò»¸ö¿ÕµÄ»­²¼, ÓÃÓÚ´æ·Å×îÖÕºÏ²¢µÄÑÚÂë
+    % 2. åˆå§‹åŒ–ä¸€ä¸ªç©ºçš„ç”»å¸ƒ, ç”¨äºå­˜æ”¾æœ€ç»ˆåˆå¹¶çš„æ©ç 
     final_combined_mask = false(hi, wi);
     
-    % 3. »ñÈ¡Í¼ÖĞËùÓĞ warping ºóµÄÊµÀıID
+    % 3. è·å–å›¾ä¸­æ‰€æœ‰ warping åçš„å®ä¾‹ID
     unique_ids = unique(fg_map);
-    unique_ids(unique_ids == 0) = []; % ÒÆ³ı±³¾°ID 0
+    unique_ids(unique_ids == 0) = []; % ç§»é™¤èƒŒæ™¯ID 0
     
-    % 4. ±éÀúÃ¿Ò»¸öÊµÀı
+    % 4. éå†æ¯ä¸€ä¸ªå®ä¾‹
     for k = 1:length(unique_ids)
         instance_id = unique_ids(k);
         
-        % a. ÌáÈ¡µ±Ç°ÊµÀıÔ­Ê¼µÄ¡¢Î´ÅòÕÍµÄ¶şÖµÑÚÂë
+        % a. æå–å½“å‰å®ä¾‹åŸå§‹çš„ã€æœªè†¨èƒ€çš„äºŒå€¼æ©ç 
         original_instance_mask = (fg_map == instance_id);
         
-        % b. ¶Ô¸ÃÊµÀıÑÚÂë½øĞĞÅòÕÍ²Ù×÷
+        % b. å¯¹è¯¥å®ä¾‹æ©ç è¿›è¡Œè†¨èƒ€æ“ä½œ
         dilated_instance_mask = imdilate(original_instance_mask, se);
         
-        % c. ½«ÅòÕÍºóµÄÑÚÂëÓë¿Õ¶´ÑÚÂë M È¡½»¼¯
+        % c. å°†è†¨èƒ€åçš„æ©ç ä¸ç©ºæ´æ©ç  M å–äº¤é›†
         intersection_mask = dilated_instance_mask & M;
         
-        % d. ÅĞ¶ÏÊÇ·ñ´æÔÚ½»¼¯
+        % d. åˆ¤æ–­æ˜¯å¦å­˜åœ¨äº¤é›†
         if any(intersection_mask(:))
-            % e. Èç¹û´æÔÚ½»¼¯, ¾Í½«¸ÃÊµÀı¡¾Ô­Ê¼µÄ¡¿ÑÚÂëºÏ²¢µ½×îÖÕµÄ»­²¼ÉÏ
+            % e. å¦‚æœå­˜åœ¨äº¤é›†, å°±å°†è¯¥å®ä¾‹ã€åŸå§‹çš„ã€‘æ©ç åˆå¹¶åˆ°æœ€ç»ˆçš„ç”»å¸ƒä¸Š
         final_combined_mask = final_combined_mask | original_instance_mask;
         
         end
     end
     
-    % 5. ½«×îÖÕµÄÂß¼­ÑÚÂë×ª»»Îª uint8 ¸ñÊ½ (0 ºÍ 255)
+    % 5. å°†æœ€ç»ˆçš„é€»è¾‘æ©ç è½¬æ¢ä¸º uint8 æ ¼å¼ (0 å’Œ 255)
     final_mask_uint8 = uint8(final_combined_mask) * 255;
     
     t2=clock;
     warp_time(idx+1,1)=etime(t2,t1);  
     
-     %±£´æ°×É«¿Õ¶´µÄÄ¿±êÍ¼¼°Æämask
+     %ä¿å­˜ç™½è‰²ç©ºæ´çš„ç›®æ ‡å›¾åŠå…¶mask
      FileName_Ides = strcat(save_path, '\Ides_ballet\Is_ballet_des', int2str(idx), '.png');
      imwrite(Ides, FileName_Ides);
      FileName_M = strcat(save_path, '\M_ballet\Is_ballet_des', int2str(idx), '_mask.png');
      imwrite(M, FileName_M);
-     %±£´æÇ°¾°ÎïÌåmask
+     %ä¿å­˜å‰æ™¯ç‰©ä½“mask
      FileName_fg_map = strcat(save_path, '\fg_instance\Is_ballet_des', int2str(idx), '_mask.png');
      imwrite(final_mask_uint8, FileName_fg_map);
      
