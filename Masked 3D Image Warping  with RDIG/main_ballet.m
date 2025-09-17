@@ -74,28 +74,28 @@ for idx = 0 : 99
         error('找不到实例掩码文件夹: %s', individual_masks_path);
     end
 
-    % 4. 获取该文件夹下所有的图片文件 (jpg, jpeg, png)
+   
     mask_files_jpg = dir(fullfile(individual_masks_path, '*.jp*g'));
     mask_files_png = dir(fullfile(individual_masks_path, '*.png'));
-    all_mask_files = [mask_files_jpg; mask_files_png]; % 合并所有找到的图片文件
+    all_mask_files = [mask_files_jpg; mask_files_png]; 
 
-    % 5. 【新增逻辑】筛选文件并排序
-    filtered_mask_names = {}; % 使用元胞数组(cell array)来存储筛选后的文件名
+    
+    filtered_mask_names = {}; 
     for i = 1:length(all_mask_files)
         file_name = all_mask_files(i).name;
-        % 如果文件名【不】是以 '_0.jpg' 或 '_0.png' 结尾, 就保留
+        
         if ~endsWith(file_name, ['_0.jpg']) && ~endsWith(file_name, ['_0.png'])
             filtered_mask_names{end+1, 1} = file_name;
         end
     end
-    % 对筛选后的文件名进行排序, 确保处理顺序是 _1, _2, ...
+    
     sorted_mask_names = sort(filtered_mask_names); 
     
-    % 6. 初始化一个空的 uint8 画布
+   
     [hi, wi, ~] = size(IR);
     instance_map = uint8(zeros(hi, wi)); 
     
-    % 7. 循环读取【筛选并排序好】的每个实例掩码并将其绘制到画布上
+   
     for k = 1:length(sorted_mask_names)
         % 定义当前实例的ID (从1开始递增)
         instance_id = uint8(k); 
