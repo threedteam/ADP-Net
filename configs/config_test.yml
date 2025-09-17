@@ -1,0 +1,76 @@
+train_flist: [ 'data/train_img.txt',
+               'data/train_instance_mask.txt']
+
+val_flist: [ 'data/test_img.txt',
+             'data/test_instance_mask.txt']
+
+train_mask_flist: [ 'data/irregular_mask.txt',
+                    'data/segment_mask.txt' ]
+
+test_path: 'data/test/img'
+test_mask_flist: 'data/test/test_mask'
+test_outputs: 'data/test/outputs'
+
+batch_size: 4
+pin_memory: true
+
+dataset:
+  mask_rate: [0.4, 0.8, 1.0]
+  input_size: 256
+  eval_size_h: 1024
+  eval_size_w: 768
+
+g_args:
+  kernel_size: 21
+
+
+d_args:
+  input_nc: 3
+
+trainer:
+  total_step: 52000
+  sample_period: 500
+  eval_period: 1000
+  save_period: 1000
+  logging_every: 50
+  ema_beta: 0.998
+  D_reg_interval: 1
+  kernel_size: 21
+
+  mae_encoder_perceptual:
+    weight: 30
+    region_weight: 2.0
+
+
+  l1:
+    use_l1: true
+    weight_missing: 0
+    weight_known: 10.0
+
+  adversarial:
+    weight: 10.0
+    gp_coef: 0.001
+    mask_as_fake_target: true
+    allow_scale_mask: true
+    extra_mask_weight_for_gen: 0.0
+    use_unmasked_for_gen: true
+    use_unmasked_for_discr: true
+    mask_scale_mode: 'nearest'
+  resnet_pl:
+    weight: 30
+    weights_path: './ADP/networks/ade20k/model'
+  feature_matching:
+    weight: 100.0
+
+optimizer:
+  warmup_steps: 0
+  decay_steps: [45000, 47000, 49000]
+  decay_rate: 0.5
+  g_opt:
+    lr: 1.0e-3
+    beta1: 0.9
+    beta2: 0.999
+  d_opt:
+    lr: 1.0e-4
+    beta1: 0.9
+    beta2: 0.999
